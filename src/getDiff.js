@@ -1,8 +1,18 @@
 import _ from 'lodash';
-import obj1 from './file1.json';
-import obj2 from './file2.json';
+import fs from 'fs';
+import path from 'path';
 
-const getDiff = (obj1, obj2) => {
+const readFile = (somePath) => {
+  const fullPath = path.resolve(process.cwd(), somePath);
+  const data = fs.readFileSync(fullPath, 'utf-8');
+  return data;
+}
+
+const getDiff = (path1, path2) => {
+
+  const obj1 = readFile(path1);
+  const obj2 = readFile(path2);
+
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
   const keys = _.union(keys1, keys2).sort();
